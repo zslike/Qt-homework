@@ -1,5 +1,4 @@
 //0128
-
 #include <QCoreApplication>
 #include <iostream>
 #include <QDebug>
