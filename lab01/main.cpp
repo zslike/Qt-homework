@@ -43,7 +43,6 @@ void foreachst(QList <Student> information)
 
     qDebug()<<"   学号"<<"     姓名"<<"课程1"<<"课程2";
     foreach (Student infor, information) {
-
         infor.display(); //调用类方法输出学生信息
     };
     qDebug()<<"\n";
