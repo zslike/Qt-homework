@@ -6,12 +6,6 @@ using namespace std;
 
 void foreachst(QList <Student> information);
 
-bool sortname(Student st1, Student st2);
-
-bool sortcurr1(Student st1, Student st2);
-
-bool sortcurr2(Student st1, Student st2);
-
 int main(int argc, char *argv[])
 {
 //    QCoreApplication a(argc, argv);
@@ -29,17 +23,16 @@ int main(int argc, char *argv[])
     foreachst(information);
 
     qDebug()<<"--------按照姓名排序--------";
-    std::sort(information.begin(), information.end(), sortname);
-    foreachst(information);
+    std::sort(information.begin(), information.end(), [](Student s1, Student s2)  {return s1.getname()>s2.getname();});
+    foreachst(information);  //用匿名函数自定义比较方法
 
     qDebug()<<"--------按照课程1排序--------";
-    std::sort(information.begin(), information.end(), sortcurr1);
+    std::sort(information.begin(), information.end(), [](Student s1, Student s2)  {return s1.getcurr1()>s2.getcurr1();});
     foreachst(information);
 
     qDebug()<<"--------按照课程2排序--------";
-    std::sort(information.begin(), information.end(), sortcurr2);
+   std::sort(information.begin(), information.end(), [](Student s1, Student s2)  {return s1.getcurr2()>s2.getcurr2();});
     foreachst(information);
-
 
 
 }
@@ -56,20 +49,4 @@ void foreachst(QList <Student> information)
     qDebug()<<"\n";
 }
 
-bool sortname( Student st1, Student st2)
-{
-        return st1.getname() > st2.getname();
-}
-
-bool sortcurr1( Student st1, Student st2)
-{
-        return st1.getcurr1() > st2.getcurr1();
-
-}
-
-bool sortcurr2( Student st1, Student st2)
-{
-        return st1.getcurr2() > st2.getcurr2();
-
-}
 
