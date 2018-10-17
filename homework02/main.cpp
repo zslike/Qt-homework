@@ -71,8 +71,6 @@ private:
 };
 
 
-#define compare(a)   (d1.stud.at(a)>=d2.stud.at(a))?  1:0       //定义学生成绩比较宏，用于myCmp::operator()内比较
-
 
 bool myCmp::operator()(const studData &d1,const  studData &d2)
 {
@@ -81,22 +79,22 @@ bool myCmp::operator()(const studData &d1,const  studData &d2)
     switch (sortedColumn)
     {
 
-       case SK::col01:result=compare(1);break;
-       case SK::col02:result=compare(2);break;
-       case SK::col03:result=compare(3);break;
-       case SK::col04:result=compare(4);break;
-       case SK::col05:result=compare(5);break;
-       case SK::col06:result=compare(6);break;
-       case SK::col07:result=compare(7);break;
-       case SK::col08:result=compare(8);break;
-       case SK::col09:result=compare(9);break;
-       case SK::col10:result=compare(10);break;
-       case SK::col11:result=compare(11);break;
-       case SK::col12:result=compare(12);break;
-       case SK::col13:result=compare(13);break;
-       case SK::col14:result=compare(14);break;
-       case SK::col15:result=compare(15);break;
-       case SK::col16:result=compare(16);break;
+       case SK::col01:result=d1.stud.at(1)>d2.stud.at(1);    break;
+       case SK::col02:result=d1.stud.at(2)>d2.stud.at(2);    break;
+       case SK::col03:result=d1.stud.at(3)>d2.stud.at(3);    break;
+       case SK::col04:result=d1.stud.at(4)>d2.stud.at(4);    break;
+       case SK::col05:result=d1.stud.at(5)>d2.stud.at(5);    break;
+       case SK::col06:result=d1.stud.at(6)>d2.stud.at(6);    break;
+       case SK::col07:result=d1.stud.at(7)>d2.stud.at(7);    break;
+       case SK::col08:result=d1.stud.at(8)>d2.stud.at(8);    break;
+       case SK::col09:result=d1.stud.at(9)>d2.stud.at(9);    break;
+       case SK::col10:result=d1.stud.at(10)>d2.stud.at(10);  break;
+       case SK::col11:result=d1.stud.at(11)>d2.stud.at(11);  break;
+       case SK::col12:result=d1.stud.at(12)>d2.stud.at(12);  break;
+       case SK::col13:result=d1.stud.at(13)>d2.stud.at(13);  break;
+       case SK::col14:result=d1.stud.at(14)>d2.stud.at(14);  break;
+       case SK::col15:result=d1.stud.at(15)>d2.stud.at(15);  break;
+       case SK::col16:result=d1.stud.at(16)>d2.stud.at(16);  break;
        default:break;
     }
     return result;
@@ -108,12 +106,17 @@ class ScoreSorter
 {
 public:
     ScoreSorter(QString dataFile);
-    void readFile();            //读文本
-    void doSort();              //文本内容排序
-    QString datafile;
+
     QList<studData > infor;
+    QString datafile;
+
     studData txttitle;  //txt表头
     studData getdata;  //txt数据
+
+    void readFile();            //读文本
+    void doSort();              //文本内容排序
+    void printfile(quint8 currentColumn);
+
 };
 
 
@@ -152,9 +155,10 @@ void ScoreSorter::readFile()
 
         if(getdata.stud.size()==0) continue;
             this->infor.append(getdata);  //添加数据到infor
+
     }
-    file.close();
 }
+
 
 
 //排序函数
@@ -169,22 +173,48 @@ void ScoreSorter::doSort()
         qDebug()<< "   "<<(this->txttitle);    //输出表头
 
         for(int i=0;i<this->infor.size();i++)  qDebug() << this->infor.at(i);  //重载输出
-        qDebug()<<"---------------------------------------------------------------\n";
+        qDebug()<<"-----------------------------------------------------------------------------------------\n";
 
+        this->printfile(i+1); //当前排序规则下的data 输出到文件
     }
 }
 
 
 
-void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+void ScoreSorter::printfile(quint8 currentColumn)
 {
-    // 自定义qDebug
+    QFile file("sorted_"+this->datafile);
+
+    file.open(QIODevice::ReadWrite | QIODevice::Append);
+
+    QTextStream stream(&file);
+    stream.setCodec("UTF-8");  //编码方式
+    stream<<QString("排序后输出，当前排序第 ")<<currentColumn <<QString(" 列：")<<"\r\n";
+
+    //输出表头
+    for(int j=0;j<this->txttitle.stud.size();j++)
+    {
+        stream<<"   "<<this->txttitle.stud.at(j);
+    }
+        stream<<"\r\n";
+
+    for(int i=0;i<this->infor.size();i++)            //输出内容
+    {
+        for(int j=0;j<this->txttitle.stud.size();j++)
+        stream<<this->infor.at(i).stud.at(j)<<"\t";
+        stream<<"\r\n";
+    }
+
+
+    stream<<"------------------------------------------------------------------"<<"\r\n\r\n";
+    file.close();
 }
+
+
 
 int main(int argc, char *argv[])
 {
     //QCoreApplication a(argc, argv);
-    //qInstallMessageHandler(myMessageOutput);
 
     QString datafile = "data.txt";
 
