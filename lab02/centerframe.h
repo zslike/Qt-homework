@@ -4,6 +4,7 @@
 #include <common.h>
 
 
+
   class QVBoxLayout;
   class QHBoxLayout;
   class DrawWidget;
@@ -18,7 +19,6 @@
       explicit CenterFrame(QWidget *parent=0);
 
       DrawWidget* insideWidget() const;
-
   protected:
 
       void createUserCommandArea();
@@ -43,6 +43,7 @@
       void on_btnTextClicked();
       void on_edtTextEdited(const QString &text);
       void on_btnDiamondClicked();
+      void on_btnDrawpicClicked();
 
 
 
@@ -57,6 +58,7 @@
       QPushButton* btnTriangle;
       QPushButton* btnDiamond;
       QPushButton* btnText;
+      QPushButton* btnDrawpic;
       QLineEdit* edtText;
 
 

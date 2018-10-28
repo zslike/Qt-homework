@@ -20,6 +20,7 @@ public:
     void setDrawnText(QString text);
 
 
+
 protected:
     void mousePressEvent (QMouseEvent *e);
     void mouseMoveEvent (QMouseEvent *e);
@@ -36,6 +37,7 @@ public slots:
     void setWidth(int);
     void setColor(QColor);
     void clear();
+    void drawpic();
 
 private :
     QPixmap *pix;
