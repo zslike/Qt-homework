@@ -21,7 +21,11 @@ public:
     explicit dataWorker(QObject *parent = 0);
     explicit dataWorker(QString date, QObject *parent = 0);
     void setRequestDate(QString newDate);
-    void setRequestCity(int order); //设置需要查询的城市
+    void setRequestCity(QString newCity); //设置需要查询的城市
+    void setRequestType(QString newType);
+
+    QString requestCity();
+    QString requestType();
     QString requestDate();
     void doRequest();
 
@@ -41,10 +45,14 @@ private:
     QNetworkAccessManager *manager;         //!< 网络访问管理类对象
     QString _requestDate;                   //!< 请求年月
     QString _requestCity;                   //!< 请求城市
+    QString _requestType;
 
     QList<QDateTime> dataDate;              //!< 日期
     QList<qreal> dataHigh;                  //!< 最高温度
     QList<qreal> dataLow;                   //!< 最低温度
+
+    QList<qreal> dataAQI;
+    QList<qreal> dataPM25;
 
     const QString splitter;                 //!< 数据分隔符
     const QString dataPath;                 //!< 数据保存路径
@@ -59,7 +67,7 @@ signals:
      * 该信号在数据解析完成，将解析的数据以3个列表（QList）的形式作为信号参数发射，<br/>
      * 提醒界面开始更新图表数据。
      */
-    void dataParseFinished(QList<QDateTime> date,QList<qreal> high, QList<qreal> low);
+    void dataParseFinished(QList<QDateTime> date,QList<qreal> ARG1, QList<qreal> ARG2);
 
     /**
      * @brief httpRequestError

@@ -40,7 +40,7 @@
        </item>
        <item>
         <property name="text">
-         <string>思南</string>
+         <string>贵阳</string>
         </property>
        </item>
        <item>
@@ -99,6 +99,32 @@
          <widget class="QPushButton" name="btnLegendAlign">
           <property name="text">
            <string>图注(底)</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>查询</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QRadioButton" name="temperature">
+          <property name="text">
+           <string>气温</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="AQI">
+          <property name="text">
+           <string>AQI（空气质量)</string>
           </property>
          </widget>
         </item>
